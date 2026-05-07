@@ -79,12 +79,13 @@ public class FakeAPITest {
     }
     @Test
     public void testCreateCategories(){
+        String name = "oviya_" + System.currentTimeMillis();
         String body = """
                 {
-                    "name": "Ovizs",
+                    "name": "%s",
                     "image": "https://placeimg.com/640/480/any"
                 }
-                """;
+                """.formatted(name);
         RestAssured.given()
                 .contentType(ContentType.JSON)
                 .body(body)
@@ -93,8 +94,7 @@ public class FakeAPITest {
                 .then()
                 .log().all()
                 .statusCode(201)
-                .body("name",Matchers.equalTo(
-                        "Ovizs"))
+                .body("name",Matchers.equalTo(name))
                 .body("image",Matchers.equalTo("https://placeimg.com/640/480/any"));
     }
 }
